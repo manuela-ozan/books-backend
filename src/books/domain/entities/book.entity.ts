@@ -1,7 +1,6 @@
 /**
  * Entidad de dominio Book
- * Define los atributos que representan un libro dentro del sistema.
- * No depende de infraestructura ni de librerías externas.
+ * Representa un libro dentro del sistema.
  */
 export class Book {
   constructor(

@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { BookRepository } from 'src/domain/books/repositories/book.repository';
-import { Book } from 'src/domain/books/entities/book.entity';
-import { GoogleBooksMapper } from '../mappers/google-books.mapper';
+import { Injectable, Inject } from '@nestjs/common';
 import { GoogleBooksApiClient } from '../services/google-books.api-client';
+import { BookRepository } from 'src/books/domain/repositories/book.repository';
+import { GoogleBooksMapper } from '../mappers/google-book.mapper';
+import { Book } from 'src/books/domain/entities/book.entity';
 
 @Injectable()
 export class GoogleBooksRepository implements BookRepository {
