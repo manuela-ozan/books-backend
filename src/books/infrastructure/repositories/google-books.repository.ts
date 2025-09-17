@@ -20,4 +20,5 @@ export class GoogleBooksRepository implements BookRepository {
     const data = await this.apiClient.getBook(id);
     return data ? this.mapper.toDomain(data) : null;
   }
+
 }

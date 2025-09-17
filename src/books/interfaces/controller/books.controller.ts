@@ -28,24 +28,41 @@ export class BooksController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'Obtiene una lista de libros por búsqueda' })
-  @ApiQuery({ name: 'q', required: true, description: 'Término de búsqueda' })
-  @ApiResponse({ status: 200, description: 'Lista de libros', type: [BookDto] })
+  @ApiOperation({ summary: 'Get a list of books by search.' })
+  @ApiQuery({ name: 'q', required: true, description: 'Search term' })
+  @ApiResponse({ status: 200, description: 'List of books', type: [BookDto] })
   async getBooks(@Query('q') query: string): Promise<BookDto[]> {
-    const books = await this.getBooksUseCase.execute(query);
-    return this.bookDtoMapper.toDtoList(books);
+    try {
+      const books = await this.getBooksUseCase.execute(query);
+      return this.bookDtoMapper.toDtoList(books);
+    } catch (error) {
+      throw new HttpException(
+        `Error retrieving books: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Obtiene un libro por su ID' })
-  @ApiParam({ name: 'id', description: 'ID del libro' })
-  @ApiResponse({ status: 200, description: 'Libro encontrado', type: BookDto })
-  @ApiResponse({ status: 404, description: 'Libro no encontrado' })
+  @ApiOperation({ summary: 'Get a book by your ID' })
+  @ApiParam({ name: 'id', description: 'Book ID' })
+  @ApiResponse({ status: 200, description: 'Book found', type: BookDto })
+  @ApiResponse({ status: 404, description: 'Book not found' })
   async getBookById(@Param('id') id: string): Promise<BookDto> {
-    const book = await this.getBookByIdUseCase.execute(id);
-    if (!book) {
-      throw new HttpException('Libro no encontrado', HttpStatus.NOT_FOUND);
+    try {
+      const book = await this.getBookByIdUseCase.execute(id);
+      if (!book) {
+        throw new HttpException('Book not found', HttpStatus.NOT_FOUND);
+      }
+      return this.bookDtoMapper.toDto(book);
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error; 
+      }
+      throw new HttpException(
+        `Error retrieving book with ID ${id}: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
-    return this.bookDtoMapper.toDto(book);
   }
 }

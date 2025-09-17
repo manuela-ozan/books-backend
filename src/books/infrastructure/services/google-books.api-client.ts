@@ -10,9 +10,9 @@ export class GoogleBooksApiClient {
   private readonly API_URL = 'https://www.googleapis.com/books/v1/volumes';
 
   /**
-   * Busca libros por título en Google Books
-   * @param query Título o palabra clave
-   * @returns Lista de GoogleBookItem
+   * Search for books by title in Google Books
+   * @param query Title or keyword
+   * @returns List of GoogleBookItems
    */
   async searchBooks(query: string): Promise<GoogleBookItem[]> {
     const queryEncoded = encodeURIComponent(`intitle:"${query}"`);
@@ -23,9 +23,9 @@ export class GoogleBooksApiClient {
   }
 
   /**
-   * Obtiene un libro por ID
-   * @param id ID del libro en Google Books
-   * @returns GoogleBookItem o null
+   * Gets a book by ID
+   * @param id The book's ID in Google Books
+   * @returns GoogleBookItem or null
    */
   async getBook(id: string): Promise<GoogleBookItem | null> {
     const res = await axios.get<GoogleBookItem>(`${this.API_URL}/${id}`);

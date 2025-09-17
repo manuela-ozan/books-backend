@@ -1,7 +1,8 @@
 /**
- * Entidad de dominio Book
- * Representa un libro dentro del sistema.
+ * Book domain entity
+ * Represents a book within the system.
  */
+
 export class Book {
   constructor(
     public readonly id: string,

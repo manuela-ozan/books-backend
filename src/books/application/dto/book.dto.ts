@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
 
 /**
- * DTO que representa la información de un libro expuesta al cliente
+ * DTO that represents the information of a book exposed to the client
  */
 export class BookDto {
   @ApiProperty({ description: 'ID único del libro' })

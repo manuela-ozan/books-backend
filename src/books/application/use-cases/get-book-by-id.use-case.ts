@@ -1,4 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Book } from 'src/books/domain/entities/book.entity';
 import {
   BOOK_REPOSITORY,
@@ -6,8 +11,9 @@ import {
 } from 'src/books/domain/repositories/book.repository';
 
 /**
- * Caso de uso para obtener un libro por su ID
+ * Use case to get a book by its ID
  */
+
 @Injectable()
 export class GetBookByIdUseCase {
   constructor(
@@ -15,11 +21,19 @@ export class GetBookByIdUseCase {
   ) {}
 
   /**
-   * Ejecuta la búsqueda de un libro por ID
-   * @param id ID del libro
-   * @returns Libro encontrado o null
+   * Executes the search for a book by ID
+   * @param id Book ID
+   * @returns Found book or null
    */
-  async execute(id: string): Promise<Book | null> {
-    return this.bookRepository.getBookById(id);
+  async execute(id: string): Promise<Book> {
+    try {
+      const book = await this.bookRepository.getBookById(id);
+      if (!book) {
+        throw new NotFoundException(`Book with id ${id} not found`);
+      }
+      return book;
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to get book');
+    }
   }
 }
