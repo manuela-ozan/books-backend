@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { GoogleBooksApiClient } from '../services/google-books.api-client';
 import { BookRepository } from 'src/books/domain/repositories/book.repository';
 import { GoogleBooksMapper } from '../mappers/google-book.mapper';
