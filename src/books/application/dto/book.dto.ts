@@ -5,24 +5,24 @@ import { IsString, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
  * DTO that represents the information of a book exposed to the client
  */
 export class BookDto {
-  @ApiProperty({ description: 'ID único del libro' })
+  @ApiProperty({ description: 'Unique book ID' })
   @IsString()
   id: string;
 
-  @ApiProperty({ description: 'Título del libro' })
+  @ApiProperty({ description: 'Book title' })
   @IsString()
   title: string;
 
-  @ApiProperty({ description: 'Autores del libro', type: [String] })
+  @ApiProperty({ description: 'Book authors', type: [String] })
   @IsArray()
   @ArrayNotEmpty()
   authors: string[];
 
-  @ApiProperty({ description: 'Fecha de publicación' })
+  @ApiProperty({ description: 'Publication date' })
   @IsString()
   publishedDate: string;
 
-  @ApiProperty({ description: 'URL de la miniatura', required: false })
+  @ApiProperty({ description: 'Thumbnail UR', required: false })
   @IsOptional()
   @IsString()
   thumbnail?: string;
